@@ -31,17 +31,27 @@
 вводит натуральное число N – количество элементов в массиве. В
 последующих строках записаны N целых чисел Ai.
 Последняя строка содержит число X
+
+*Пример:*
+5
+1 2 3 4 5
+6
+-> 5
 '''
 # ========================= РЕШЕНИЕ =========================
-import random
-n = int(input('Введите размер массива: '))
-x = int(input('Введите искомое число от 0 до 9: '))
-arr = []
-for i in range(n):
-    arr.append(random.randrange(10))
-print(arr)
+# import random
 
+# n = int(input('Введите размер массива: '))
+# x = int(input('Введите искомое число: '))
+# arr = []
+# for i in range(n):
+#     arr.append(random.randrange(n))
+# print(arr)
 
+# def nearval(arr, number):
+#     return min(arr, key=lambda x: abs(number - abs(x))) # сперто ин инета
+
+# print(f'Ближайшее к {x} число в массиве: {nearval(arr, x)}')
 # ===========================================================
 '''
 Задача 20: В настольной игре Скрабл (Scrabble) каждая буква имеет определенную
@@ -66,4 +76,25 @@ print(arr)
 английские, либо только русские буквы.
 '''
 # ========================= РЕШЕНИЕ =========================
+eng_letters = ['A', 'E', 'I', 'O', 'U', 'L', 'N', 'S', 'T', 'R', 'D', 'G', 'B', 'C', 'M', 'P', 'F', 'H', 'V', 'W', 'Y', 'K', 'J', 'X', 'Q', 'Z']
+eng_points  = [ 1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   3,   3,   3,   3,   4,   4,   4,   4,   4,   5,   8,   8,   10,  10]
+rus_letters = ['А', 'В', 'Е', 'И', 'Н', 'О', 'Р', 'С', 'Т', 'Д', 'К', 'Л', 'М', 'П', 'У', 'Б', 'Г', 'Ё', 'Ь', 'Я', 'Й', 'Ы', 'Ж', 'З', 'Х', 'Ц', 'Ч', 'Ш', 'Э', 'Ю', 'Ф', 'Щ', 'Ъ']
+rus_points  = [ 1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   3,   4,   4,   5,   5,   5,   5,   5,   8,   8,   8,   10,  10,  10]
+
+letters = eng_letters + rus_letters
+points  = eng_points  + rus_points
+
+index = 0
+summ = 0
+
+usrInput = input("Введите слово [eng]A-Z, [rus]А-Я: ")
+lstInput = list(usrInput)
+
+for char in letters:
+    index = index + 1
+    for i in range(len(lstInput)):
+        if lstInput[i] == char:
+            point_index = points[index-1]
+            summ = summ + point_index
+print(summ)
 # ===========================================================
