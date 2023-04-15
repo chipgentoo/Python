@@ -91,7 +91,7 @@ usrInput = input("Введите слово [eng]A-Z, [rus]А-Я: ")
 lstInput = list(usrInput)
 
 for char in letters:
-    index = index + 1
+    index += 1
     for i in range(len(lstInput)):
         if lstInput[i] == char:
             point_index = points[index-1]
