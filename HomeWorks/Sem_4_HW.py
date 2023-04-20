@@ -10,6 +10,27 @@ m — кол-во элементов второго множества.
 '''
 # ========================= РЕШЕНИЕ =========================
 
+# def gen_list(x): # Лениво вводить руками
+#     in_list = []
+#     for i in range(x):
+#         in_list.append(random.randint(0,x))
+#     return in_list
+
+# n = int(input('Введите кол-во 1-го набора целых чисел: '))
+# m = int(input('Введите кол-во 2-го набора целых чисел: '))
+
+# list_n = gen_list(n)
+# list_m = gen_list(m)
+# print ('list_n = ', list_n)
+# print ('list_m = ', list_m)
+
+# out_list = sorted(set(list_n) & set(list_m), key=int)
+
+# if len(out_list) > 0:
+#     print('Общие цифры: ', out_list)
+# else:
+#     print('Общие цифры отсутствуют')
+
 # ===========================================================
 '''
 Задача 24:
@@ -23,4 +44,22 @@ m — кол-во элементов второго множества.
 находясь перед некоторым кустом заданной во входном файле грядки.
 '''
 # ========================= РЕШЕНИЕ =========================
+
+# def gen_list(x): # Лениво вводить руками
+#     in_list = []
+#     for i in range(x):
+#         in_list.append(random.randint(0,x))
+#     return in_list
+
+# bush = int(input('Введите кол-во кустов: ') )
+
+# barries = gen_list(bush)
+# print('Урожайность кустов: ',barries)
+# n = len(barries)
+# barries = barries + barries[:2]
+# harvester = 0
+# for i in range(n):
+#     harvester = max( harvester, barries[i] + barries[i+1] + barries[i+2] )
+# print('Максимальный сбор с 3х кустов: ',harvester)
+
 # ===========================================================
