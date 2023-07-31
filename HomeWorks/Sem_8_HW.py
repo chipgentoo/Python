@@ -6,7 +6,7 @@ def file_read(filepath):
         return file.read()
 
 
-def showtel(filepath):
+def show_tel(filepath):
     print('===========================================')
     for record in file_read(filepath).split('\n'):
         print(record)
@@ -37,7 +37,7 @@ def rec_write():
 
 
 def main():
-    showtel(file_path)
+    show_tel(file_path)
     print('add \t - Добавить')
     print('find\t - Поиск')
     print('end \t - Выход')
