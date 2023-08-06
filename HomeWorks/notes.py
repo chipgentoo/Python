@@ -54,6 +54,13 @@ def note_remove(note_id):
             notes_list.remove(note)
 
 
+def note_find(date_str):
+    for note in notes_list:
+        if datetime.strptime(note[3],'%Y-%m-%d').date() == datetime.strptime(date_str,'%Y-%m-%d').date():
+            print(note)
+
+
+
 def notes_save():
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
@@ -68,6 +75,7 @@ def main():
     print('add \t - Добавить')
     print('save\t - Сохранить')
     print('del \t - Удалить')
+    print('find\t - Найти по дате')
     print('exit\t - Выход')
     in_str = input(">>")
     if in_str == 'add':
@@ -76,6 +84,8 @@ def main():
         notes_save()
     elif in_str == 'del':
         note_remove(int(input('Введите индекс заметки: ')))
+    elif in_str == 'find':
+        note_find(input('Введите дату: '))
     elif in_str == 'exit':
         return 'exit'
 
