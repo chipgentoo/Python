@@ -1,6 +1,6 @@
 import sys
 
-file_path = "notes.csv"
+file_path = 'notes.csv'
 notes_list = []
 
 
@@ -32,11 +32,25 @@ def notes_show():
     print('==============================')
 
 
+def note_new_id():
+    max_index = 0
+    for note in notes_list:
+       if int(note[0]) > max_index:
+           max_index = int(note[0])
+    return str(max_index + 1)
+
+
 def note_add():
-    note_id = input('Введите ID заметки: ')
+    note_id = note_new_id()
     note_title = input('Введите заголовок: ')
     note_body = input('Ведеите текст заметки: ')
     notes_list.append(note_id + ';' + note_title + ';' + note_body)
+
+
+def note_remove(note_id):
+    for note in notes_list:
+        if int(note[0]) == int(note_id):
+            notes_list.remove(note)
 
 
 def notes_save():
@@ -51,10 +65,16 @@ def notes_save():
 def main():
     notes_show()
     print('add \t - Добавить')
+    print('save\t - Сохранить')
+    print('del \t - Удалить')
     print('exit\t - Выход')
     in_str = input(">>")
     if in_str == 'add':
         note_add()
+    elif in_str == 'save':
+        notes_save()
+    elif in_str == 'del':
+        note_remove(int(input('Введите индекс заметки: ')))
     elif in_str == 'exit':
         return 'exit'
 
