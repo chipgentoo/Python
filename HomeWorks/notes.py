@@ -1,4 +1,5 @@
 import sys
+from datetime import datetime
 
 file_path = 'notes.csv'
 notes_list = []
@@ -44,7 +45,7 @@ def note_add():
     note_id = note_new_id()
     note_title = input('Введите заголовок: ')
     note_body = input('Ведеите текст заметки: ')
-    notes_list.append(note_id + ';' + note_title + ';' + note_body)
+    notes_list.append(note_id + ';' + note_title + ';' + note_body + ';' + str(datetime.now().date()))
 
 
 def note_remove(note_id):
