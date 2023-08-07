@@ -1,8 +1,14 @@
 import sys
 from datetime import datetime
+from typing import Final
 
 file_path = 'notes.csv'
 notes_list = []
+
+NOTE_ID: Final = 0
+NOTE_TITLE: Final = 1
+NOTE_TEXT: Final = 2
+NOTE_DATE: Final = 3
 
 
 def file_read(file_path):
@@ -18,7 +24,7 @@ def file_read(file_path):
             # TODO: Дописать обработку ошибки
     else:
         for line in file:
-            notes_list.append(line.replace('\n', ''))
+            notes_list.append(line.replace('\n', '').split(';'))
 
 
 def notes_show():
@@ -26,7 +32,11 @@ def notes_show():
         print('Кол-во заметок:' + str(len(notes_list)))
         print('==============================')
         for note in notes_list:
-            print(note)
+            print(str(
+                int(note[NOTE_ID])) + ', ' +
+                str(note[NOTE_TITLE]) + ', ' +
+                str(note[NOTE_TEXT]) + ', ' +
+                str(note[NOTE_DATE]))
     else:
         print('==============================')
         print('Заметки отсутствуют')
@@ -34,38 +44,52 @@ def notes_show():
 
 
 def note_new_id():
-    max_index = 0
+    max_id = 0
     for note in notes_list:
-       if int(note[0]) > max_index:
-           max_index = int(note[0])
-    return str(max_index + 1)
+        if int(note[NOTE_ID]) > max_id:
+            max_id = int(note[NOTE_ID])
+    return max_id + 1
 
 
 def note_add():
+    note_list = []
     note_id = note_new_id()
     note_title = input('Введите заголовок: ')
-    note_body = input('Ведеите текст заметки: ')
-    notes_list.append(note_id + ';' + note_title + ';' + note_body + ';' + str(datetime.now().date()))
+    note_text = input('Введите заметку: ')
+    note_date = datetime.now().__format__('%d.%m.%Y')
+    note_list.append(note_id)
+    note_list.append(note_title)
+    note_list.append(note_text)
+    note_list.append(note_date)
+    notes_list.append(note_list)
 
 
-def note_remove(note_id):
+def note_del(note_id):
+    if note_id.isnumeric():
+        for note in notes_list:
+            if int(note[NOTE_ID]) == int(note_id):
+                notes_list.remove(note)
+    else:
+        print('Не числовое значение')
+
+
+def note_edit(note_id):
     for note in notes_list:
-        if int(note[0]) == int(note_id):
-            notes_list.remove(note)
-
-
-def note_find(date_str):
-    for note in notes_list:
-        if datetime.strptime(note[3],'%Y-%m-%d').date() == datetime.strptime(date_str,'%Y-%m-%d').date():
-            print(note)
-
+        if int(note[NOTE_ID]) == int(note_id):
+            print('Заголовок: ' + note[NOTE_TITLE])
+            print('Текст заметки: ' + note[NOTE_TEXT])
+            note[NOTE_TEXT] = input('Введите новый текст заметки')
+            note[NOTE_DATE] = datetime.now().__format__('%d.%m.%Y')
+            notes_save()
 
 
 def notes_save():
     try:
         with open(file_path, 'w', encoding='utf-8') as file:
             for note in notes_list:
-                file.write(str(note) + '\n')
+                note_str = str(note[NOTE_ID]) + ';' + note[NOTE_TITLE] + ';' + note[NOTE_TEXT] + ';' + note[NOTE_DATE]
+                file.write(str(note_str) + '\n')
+        print('Файл с заметками сохранен.')
     except IOError as io_err:
         print(io_err)
 
@@ -73,19 +97,19 @@ def notes_save():
 def main():
     notes_show()
     print('add \t - Добавить')
-    print('save\t - Сохранить')
     print('del \t - Удалить')
-    print('find\t - Найти по дате')
+    print('edit\t - Изменить')
+    print('save\t - Сохранить')
     print('exit\t - Выход')
     in_str = input(">>")
     if in_str == 'add':
         note_add()
+    elif in_str == 'del':
+        note_del(input('Введите индекс заметки: '))
+    elif in_str == 'edit':
+        note_edit(input('Введите индекс заметки: '))
     elif in_str == 'save':
         notes_save()
-    elif in_str == 'del':
-        note_remove(int(input('Введите индекс заметки: ')))
-    elif in_str == 'find':
-        note_find(input('Введите дату: '))
     elif in_str == 'exit':
         return 'exit'
 
